@@ -1,0 +1,113 @@
+$mainColor: #282c34;
+$greyColor: #dddddd;
+$background: #f8f1ec;
+
+body {
+    background-color: $background !important;
+}
+
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.form-control:focus {
+    box-shadow: unset !important;
+}
+
+.todo-list {
+    > div {
+        &:hover {
+            background-color: $greyColor;
+        }
+        > div {
+            width: 75%;
+        }
+        .delete {
+            width: 25%;
+            width: 25px;
+            height: 25px;
+            padding: 0;
+            align-self: center;
+            right: 13%;
+            align-items: center;
+            line-height: 0;
+        }
+    }
+    .custom-checkbox {
+        input {
+            &:checked + label {
+                &:before {
+                    border-color: green !important;
+                    background-color: green !important;
+                }
+            }
+        }
+    }
+}
+
+.detail {
+    .back {
+        &::before {
+            content: "<";
+        }
+    }
+}
+
+.card {
+    box-shadow: 0px 0px 5px 2px rgba(153, 153, 153, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: $mainColor;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login-page {
+    padding: 100px 0;
+    form {
+        .login-page-content {
+            border: 1px solid $greyColor;
+            border-radius: 5px;
+            input {
+                border: unset;
+                &:first-child {
+                    border-bottom: 1px solid $greyColor;
+                }
+            }
+        }
+    }
+}
+
+.todo-edit {
+    text-decoration: line-through;
+}
