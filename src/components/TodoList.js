@@ -5,37 +5,24 @@ import TodoAddList from './TodoAddList';
 
 export class TodoList extends Component {
 
-    constructor() {
-        super();
-        let todoListData = JSON.parse(localStorage.getItem('data'));
+    constructor(props) {
+        super(props);
         this.state = {
-            todoListData: todoListData
-        };
+            showAllTodo: 'all'
+        }
     }
 
-    state = {
-        todos: [],
-        showAllTodo: 'all'
-    };
-
     toggleComplete = (id) => {
-        let updatedList = this.state.todoListData;
+        let updatedList = this.props.tasks.map(todo => {
+            if (todo.id === id) {
+                todo.complete = !todo.complete;
+            }
+            return todo;
+        })
 
         this.setState({
-            todoListData: this.state.todoListData.map(todo => {
-                if (todo.id === id) {
-                    // update
-                    return {
-                        ...todo,
-                        complete: !todo.complete
-                    }
-                } else {
-                    return todo;
-                }
-            })
+            tasks: updatedList
         })
-        this.updateLocalStorage(updatedList);
-
     }
 
     updatedTodoToShow = (strng) => {
@@ -45,40 +32,32 @@ export class TodoList extends Component {
     }
 
     handleDelete = (id) => {
-        let updatedList = this.state.todoListData;
+        let updatedList = this.props.tasks;
 
         updatedList.splice(id, 1)
         this.setState({
-            updatedList: this.state.todoListData.filter(todo => todo.id !== id)
+            updatedList: this.props.tasks.filter(todo => todo.id !== id)
         })
-
-        this.updateLocalStorage(updatedList);
-    }
-
-    updateLocalStorage(updatedList) {
-        var updatedList = JSON.stringify(updatedList);
-        localStorage.setItem('data', updatedList);
-        return true;
     }
 
     render() {
-        let updatedList = this.state.todoListData;
+        let toDoClass = this.props.tasks.complete ? "todo-edit" : "undone";
+        let updatedList = this.props.tasks;
 
         if (this.state.showAllTodo === 'all') {
-            updatedList = this.state.todoListData;
+            updatedList = this.props.tasks;
         } else if (this.state.showAllTodo === 'active') {
-            updatedList = this.state.todoListData.filter(todo => !todo.complete);
+            updatedList = this.props.tasks.filter(todo => !todo.complete);
         } else if (this.state.showAllTodo === 'complete') {
-            updatedList = this.state.todoListData.filter(todo => todo.complete);
+            updatedList = this.props.tasks.filter(todo => todo.complete);
         }
 
         return (
-            <div className="col-md-7 d-flex flex-column m-auto">
-                {/* <h1 className="text-center">Todo List</h1> */}
-                {/* <TodoAddList onSubmit={this.todoAddList}></TodoAddList> */}
+            <div className="d-flex flex-column mt-n2">
                 <div className="todo-list card d-flex flex-column">
-                    {this.state.todoListData.map(todo => (
+                    {this.props.tasks.map(todo => (
                         <div key={todo.id} className="d-flex flex-row col-12 py-2">
+
                             <div className={todo.complete ? 'todo-edit' : ''} key={todo.id} onClick={() => this.toggleComplete(todo.id)} > {todo.text} </div>
 
                             <div className="align-items-center col-7 col-md-4 d-flex flex-row justify-content-around px-0">
@@ -97,7 +76,7 @@ export class TodoList extends Component {
                     ))}
                 </div>
                 <div className="card d-flex flex-row justify-content-between mt-5 p-3">
-                    <div>todo {this.state.todoListData.filter(todo => !todo.complete).length} items left</div>
+                    <div>todo {this.props.tasks.filter(todo => !todo.complete).length} items left</div>
 
                     <div>
                         <button className="border-0 bg-white" onClick={() => this.updatedTodoToShow('all')}>All</button>

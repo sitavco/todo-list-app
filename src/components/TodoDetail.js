@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 export class TodoDetail extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         let todoListData = JSON.parse(localStorage.getItem('data'));
         this.state = {
             todoListData: todoListData
@@ -13,26 +13,24 @@ export class TodoDetail extends Component {
         this.getItemId = this.getItemId.bind(this);
     }
 
-    getItemId = () => {
+    getItemId = (id) => {
         let updatedList = this.state.todoListData;
         this.setState({
-            updatedList: this.state.todoListData.filter(todo => {
-                // todo.id === id;
-            })
+            updatedList: this.state.todoListData.filter(todo => todo.id === id)
         })
     }
 
 
     render() {
         return (
-            <div className="detail col-md-7 d-flex flex-column m-auto">
+            <div className="detail d-flex flex-column">
                 <form className="d-flex flex-column" onSubmit={this.addTodo}>
-                    <div className="card p-3">
-                        <input className="form-control border-0" minLength={2} maxLength={10} name="text" value={this.state.text} onChange={this.handleChange} placeholder="What needs to be done?" />
+                    <div className="card p-3 mb-n2">
+                        <input className="form-control border-0" maxLength={15} name="text" value={this.state.text} onChange={this.handleChange} placeholder="What needs to be done?" />
                     </div>
 
-                    <Link to={'/todo-list'} className="text-center">
-                        <button className="back btn btn-success rounded-circle m-auto" onClick={this.addTodo}></button>
+                    <Link to={'/todo-add'} className="text-center">
+                        <button className="button back btn btn-success rounded-circle m-auto" onClick={this.addTodo}></button>
                     </Link>
 
                 </form>

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import TodoList from './TodoList';
 
 export class TodoAddList extends Component {
-
+    constructor(props) {
+        super(props);
+    }
     state = {
         text: ''
     }
@@ -23,10 +26,6 @@ export class TodoAddList extends Component {
             status: 'active'
         })
 
-        if (this.state.text.length < 3) {
-            console.log('Your text is less than what is required!');
-        }
-
         this.setState({
             text: '',
             number: ''
@@ -35,14 +34,16 @@ export class TodoAddList extends Component {
 
     render() {
         return (
-            <div className="col-md-7 d-flex flex-column m-auto">
+            <div className="d-flex flex-column">
                 <form className="d-flex flex-column" onSubmit={this.addTodo}>
-                    <div className="card p-3">
-                        <input className="form-control border-0" minLength={2} maxLength={10} name="text" value={this.state.text} onChange={this.handleChange} placeholder="What needs to be done?" />
+                    <div className="card p-3 mb-n2">
+                        <input className="form-control border-0" maxLength={15} name="text" value={this.state.text} onChange={this.handleChange} placeholder="What needs to be done?" />
                     </div>
 
-                    <button className="btn btn-success rounded-circle m-auto" onClick={this.addTodo}>+</button>
+                    <button className="button btn btn-success rounded-circle m-auto" onClick={this.addTodo}>+</button>
                 </form>
+
+                <TodoList tasks={this.props.tasks} />
             </div>
         )
     }

@@ -19,6 +19,26 @@ body {
     box-shadow: unset !important;
 }
 
+input[type="text"] {
+    &:focus {
+        outline: none;
+    }
+}
+
+.button {
+    position: relative;
+    z-index: 100;
+    color: #fff;
+    box-shadow: 0 0px 8px 1px rgb(176, 182, 187);
+    margin: -40px auto;
+    border-radius: 100%;
+    font-size: 26px;
+    display: flex;
+    width: 45px;
+    height: 45px;
+    padding-top: 0;
+}
+
 .todo-list {
     > div {
         &:hover {
